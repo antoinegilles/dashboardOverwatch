@@ -22,6 +22,16 @@
   color: #61dafb;
 }
 
+#conteneur
+{
+    display: flex;
+    justify-content: space-around;
+    background-color: #f99e1a;
+}
+.MuiFormControl-root-1{
+  width: 7em;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
