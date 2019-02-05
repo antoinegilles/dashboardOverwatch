@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -13,7 +14,7 @@ gamerTag = null;
 
   constructor(props) {
     super(props);
-    this.state = {value: '',value2:"",value3:"",json:'',open: false, isHidden: true};
+    this.state = {value: '',value2:"",value3:"",open: false,dataProfile:{games:{competitive:{won:""} ,quickplay:{won:""}}} };
   
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeRegion = this.handleChangeRegion.bind(this);
@@ -60,19 +61,32 @@ gamerTag = null;
 
   handleSubmitTest(event) {
     event.preventDefault();
-    const overwatch = require('overwatch-api');
     const platform = this.state.value3;
     const reg = this.state.value2;
     const tag =  this.state.value;
+    console.log(reg + platform + tag)
 
-    overwatch.getProfile(platform, reg, tag, (err, json) => {
-      if (err) alert("Profil introuvable");
-      else this.setState(json)
-      console.log(this.state)
-    });
+      axios.post('http://localhost:2000/'+platform+'/'+reg+'/'+tag+'', {
+       
+      })
+      .then((res) => this.setState({dataProfile: res.data}))
+      .then(() => console.log(this.state))
+      .catch((error) => alert("Profil introuvable, vérifiez vos données"))
+      // .then(function (response) {
+      //   console.log(response.data)
+      //   this.setState(JSON.stringify(response.data))
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
+
+
+      
+  
   }
   
   
+
   render() {
   
     return (
@@ -141,9 +155,11 @@ gamerTag = null;
 {/* Affichage profil */}    
   <header className="App-header">
     <img src="./LogoOv.png" className="App-logo" alt="logoOverwatch" />
-    <p id="paragrapheUsername">Username : {this.state.username}</p>
-    <p> Level : {this.state.level}</p>
-    <img src={this.state.portrait}/>
+    <p id="paragrapheUsername">Username : {this.state.dataProfile.username}</p>
+    <p> Level : {this.state.dataProfile.level}</p>
+    <p> Total win competitive ( season ) : {this.state.dataProfile.games.competitive.won}</p>
+    <p> Total win quickplay ( season ) : {this.state.dataProfile.games.quickplay.won}</p>
+    <img  src={this.state.dataProfile.portrait}/>
   </header>
 </div>
     );

@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material/select": "^0.43.0",
+    "axios": "^0.18.0",
     "materialize-css": "^1.0.0-rc.2",
     "overwatch-api": "^0.7.4",
     "react": "^16.7.0",
