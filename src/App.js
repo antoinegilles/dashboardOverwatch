@@ -66,7 +66,7 @@ gamerTag = null;
     const tag =  this.state.value;
     console.log(reg + platform + tag)
 
-      axios.post('http://localhost:2000/'+platform+'/'+reg+'/'+tag+'', {
+      axios.post('https://agitated-einstein-e7a29f.netlify.com/'+platform+'/'+reg+'/'+tag+'', {
        
       })
       .then((res) => this.setState({dataProfile: res.data}))
