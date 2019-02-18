@@ -67,7 +67,7 @@ gamerTag = null;
     console.log(reg + platform + tag)
 
 
-      axios.post('https://ovapi.herokuapp.com/'+platform+'/'+reg+'/'+tag+'', {
+      axios.post('https://ov-api.herokuapp.com/'+platform+'/'+reg+'/'+tag+'', {
        
       })
       .then((res) => this.setState({dataProfile: res.data}))
