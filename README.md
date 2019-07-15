@@ -8,4 +8,6 @@ To use it
 ### npm install to install all dependencies 
 ### npm start to run the application
 
+# Warning ! your pseudo have to have a ' - ' and not ' # '
+
 check https://reactjs.org/ to have more information about react js 
