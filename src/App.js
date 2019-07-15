@@ -14,7 +14,7 @@ gamerTag = null;
 
   constructor(props) {
     super(props);
-    this.state = {value: '',value2:"",value3:"",open: false,dataProfile:{games:{competitive:{won:""} ,quickplay:{won:""}}} };
+    this.state = {value: '',value2:"",value3:"",open: false,dataProfile:{games:{competitive:{won:""} ,quickplay:{won:""}}}, spinner:true };
   
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeRegion = this.handleChangeRegion.bind(this);
@@ -59,20 +59,36 @@ gamerTag = null;
     this.setState({value3: event.target.value});
   }
 
-  handleSubmitTest(event) {
+  async handleSubmitTest(event) {
+    
     event.preventDefault();
     const platform = this.state.value3;
     const reg = this.state.value2;
     const tag =  this.state.value;
     console.log(reg + platform + tag)
+    
+
+    var elem = document.getElementById('logo');
+    elem.style.animation = "App-logo-spin infinite 2s linear"
+    
+    
 
 
       axios.post('https://ovapi.herokuapp.com/'+platform+'/'+reg+'/'+tag+'', {
        
       })
-      .then((res) => this.setState({dataProfile: res.data}))
-      .then(() => console.log(this.state))
-      .catch((error) => alert("Profil introuvable, vérifiez vos données"))
+      .then((res) => 
+        this.setState({dataProfile: res.data})
+      )
+      .then(() => 
+        elem.style.animation = "App-logo-spin infinite 20s linear"
+      )
+      
+      .catch((error) => {
+        alert("Profil introuvable, vérifiez vos données")
+        elem.style.animation = "App-logo-spin infinite 20s linear"
+      })
+    
       // .then(function (response) {
       //   console.log(response.data)
       //   this.setState(JSON.stringify(response.data))
@@ -80,11 +96,16 @@ gamerTag = null;
       // .catch(function (error) {
       //   console.log(error);
       // });
-
-
       
-  
   }
+
+   handleClick = () => {
+    this.setState({spinner :false})
+   }
+
+   changeStateSpinner = () => {
+     console.log("je passe la ")
+   }
   
   
 
@@ -148,14 +169,14 @@ gamerTag = null;
           </Select>
         </FormControl>
 
-        <Button type="submit" value="Submit">
+        <Button type="submit" value="Submit" onClick={this.handleClick}>
         Valider
         </Button>
   </form>
 
 {/* Affichage profil */}    
   <header className="App-header">
-    <img src="./LogoOv.png" className="App-logo" alt="logoOverwatch" />
+    <img src="./LogoOv.png" id="logo" className="App-logo" alt="logoOverwatch" />
     <p id="paragrapheUsername">Username : {this.state.dataProfile.username}</p>
     <p> Level : {this.state.dataProfile.level}</p>
     <p> Total win competitive ( season ) : {this.state.dataProfile.games.competitive.won}</p>
