@@ -130,8 +130,8 @@ gamerTag = null;
    <form id="conteneur" onSubmit={this.handleSubmitTest}>
  {/* Plateform */}      
     <FormControl className={App.formControl}>
-      <InputLabel htmlFor="component-simple">Name</InputLabel>
-      <Input id="component-simple" type="text" value={this.state.value} onChange={this.handleChangeName} />
+      <InputLabel htmlFor="component-simple">Gamer Tag</InputLabel>
+      <Input placeholder="FunnyAstro-2570" id="component-simple" type="text" value={this.state.value} onChange={this.handleChangeName} />
     </FormControl>
 
 {/* Plateform */}   
