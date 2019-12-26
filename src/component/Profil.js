@@ -14,7 +14,7 @@ render() {
     console.log(this.props)
     return (
     <div>
-        <p> Profil du Joueur :  </p>
+        <h1> Profil du Joueur</h1>
         <img src={this.props.data.portrait}/>
         <p> Nom : {this.props.data.username} </p>
         <p> Rang Compétitif : {this.props.competitive} </p>
