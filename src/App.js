@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import axios from 'axios';
+import Profil from './component/Profil';
 
 
 class App extends Component {
@@ -14,7 +15,21 @@ gamerTag = null;
 
   constructor(props) {
     super(props);
-    this.state = {value: '',value2:"",value3:"",open: false,dataProfile:{games:{competitive:{won:""} ,quickplay:{won:""}}}, spinner:true };
+    this.state = {
+      response:[],
+      competitiveRank:"",
+      games:[],
+      value: '',
+      value2:"",
+      value3:"",
+      open: false,
+      dataProfile:
+      {games:
+          {competitive:
+              {won:""},
+              quickplay:{won:""}}}, 
+      spinner:true 
+    };
   
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeRegion = this.handleChangeRegion.bind(this);
@@ -77,25 +92,24 @@ gamerTag = null;
       axios.post('https://ovapi.herokuapp.com/'+platform+'/'+reg+'/'+tag+'', {
        
       })
-      .then((res) => 
-        this.setState({dataProfile: res.data})
+      .then((res) => { 
+        this.setState({response: res.data})
+        this.setState({competitive: res.data.competitive.rank})
+        this.setState({games: res.data.games.competitive})
+        }
       )
       .then(() => 
         elem.style.animation = "App-logo-spin infinite 20s linear"
       )
-      
+      .then(()=> 
+      console.log(this.state)
+      )
       .catch((error) => {
         alert("Profil introuvable, vérifiez vos données")
         elem.style.animation = "App-logo-spin infinite 20s linear"
+        return null
       })
-    
-      // .then(function (response) {
-      //   console.log(response.data)
-      //   this.setState(JSON.stringify(response.data))
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
+
       
   }
 
@@ -173,16 +187,11 @@ gamerTag = null;
         Valider
         </Button>
   </form>
-
-{/* Affichage profil */}    
   <header className="App-header">
     <img src="./LogoOv.png" id="logo" className="App-logo" alt="logoOverwatch" />
-    <p id="paragrapheUsername">Username : {this.state.dataProfile.username}</p>
-    <p> Level : {this.state.dataProfile.level}</p>
-    <p> Total win competitive ( season ) : {this.state.dataProfile.games.competitive.won}</p>
-    <p> Total win quickplay ( season ) : {this.state.dataProfile.games.quickplay.won}</p>
-    <img  src={this.state.dataProfile.portrait}/>
+    <Profil data={this.state.response} competitive={this.state.competitive} games={this.state.games}></Profil>
   </header>
+  
 </div>
     );
   }
